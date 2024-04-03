@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+
+
+
+  <title>Anna Dowlin</title>
+  <style>
+    body {
+      text-align: center;
+      background: url("https://th.bing.com/th/id/R.6e112b429c400fb3df62a2d355ff5cdb?rik=yazeICGBu8gn6Q&riu=http%3a%2f%2fwallup.net%2fwp-content%2fuploads%2f2016%2f02%2f240837-nature-sunset-sea-waves-clouds-water-colorful.jpg&ehk=SdRGJAsJDHiO3AxtDlpjEHMXBZyHDOHN81mWIx0R1uk%3d&risl=&pid=ImgRaw&r=0");
+
+      background-size: cover;
+      background-position: center;
+      color: red;  
+      font-family: 'Satisfy', cursive;
+      font-size: 24px;
+    }
+    p {
+      color: purple;
+       font-family: 'Yellowtail', cursive;
+      font-size: 80px;
+       
+    }
+    input {
+      border: 0;
+      padding: 10px;
+      font-size: 18px;
+    }
+    input[type="submit"] {
+      background: purple;
+      color: yellow;
+  font-family: 'Handlee', cursive;
+    }
+  </style>
+</head>
+<body>
+  <img src=" https://i.pinimg.com/280x280_RS/eb/26/2a/eb262a4b9b76eb5181bafef5ecfac703.jpg"
+ 
+  height: 50px;
+  width: 50px;>
+   
+  
+  <p>Hi! I'm Anjali, a NYC-based marketer. Say hello!</p>
+  <input id="Name" type="Name:" placeholder="Name:">
+  <input id="Email" type="Your email" placeholder="Your email">
+  <input id="submit" type="submit">
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+	import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+	
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC9un1AeXeCLJ6YHDzcj_RWvso6a2g_4KY",
+      authDomain: "website-1-53097.firebaseapp.com",
+      projectId: "website-1-53097",
+      storageBucket: "website-1-53097.appspot.com",
+      messagingSenderId: "653136887882",
+      appId: "1:653136887882:web:4cbdce9a9b37558cb5a6b3"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+	const db = getDatabase(app);
+	const Name = document.querySelector("#Name") 
+	const Email = document.querySelector("#Email")
+	document.querySelector('#submit').addEventListener('click', Submit)
+	
+	function Submit() {
+	  const timestamp = buildTimestamp()
+	  
+	  set(ref(db, timestamp), {
+		  Name: Name.value,
+	      email: Email.value,
+	  });
+
+	  Name.value = ""
+	  Email.value = ""
+	}
+	function buildTimestamp() {
+	  const now = new Date();
+	  let timestamp = now.getFullYear().toString() + "/";
+	  //const month = now.toLocaleString('default', { month: 'long' });
+
+	  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+	  month = month.toString()
+	  month = addLeadingZero(month)
+	  timestamp += month + "/"; 
+
+	  let date = now.getDate().toString()
+	  date = addLeadingZero(date)
+	  timestamp += date + "/";
+
+	  let hours = now.getHours().toString()
+	  hours = addLeadingZero(hours)
+	  timestamp += hours + ":";
+
+	  let minutes = now.getMinutes().toString()
+	  minutes = addLeadingZero(minutes)
+	  timestamp += minutes + ":";
+
+	  let seconds = now.getSeconds().toString()
+	  seconds = addLeadingZero(seconds)
+	  timestamp += seconds;
+  
+	  return timestamp
+	}
+	
+	function addLeadingZero(units) {
+		if (units.length < 2) {
+			units = "0" + units
+		}
+		return units
+	}
+
+	
+	
+  </script>
+</body>
